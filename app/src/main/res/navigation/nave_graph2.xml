@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nave_graph2"
+    app:startDestination="@id/homeFragmentNavigation">
+
+    <fragment
+        android:id="@+id/homeFragmentNavigation"
+        android:name="com.example.drapino.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/storesFragmentNavigation"
+        android:name="com.example.drapino.StoresFragment"
+        android:label="fragment_stores"
+        tools:layout="@layout/fragment_stores" />
+</navigation>

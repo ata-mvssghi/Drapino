@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_account"
+        android:title="حساب های کاربری"
+        android:icon="@drawable/user" />
+    <item
+        android:id="@+id/navigation_shoppings"
+        android:title="خرید های من"
+        android:icon="@drawable/stores"
+       />
+    <item
+        android:id="@+id/storesFragmentNavigation"
+        android:title="فروشگاه ها"
+        android:icon="@drawable/my_shoppings"
+      />
+    <item
+        android:id="@+id/homeFragmentNavigation"
+        android:title="خانه"
+        android:icon="@drawable/home"
+       />
+
+
+
+</menu>
