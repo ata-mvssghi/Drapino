@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragmentNavigation"
-        android:name="com.example.drapino.HomeFragment"
+        android:name="com.example.drapino.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/storesFragmentNavigation"
-        android:name="com.example.drapino.StoresFragment"
+        android:name="com.example.drapino.fragments.StoresFragment"
         android:label="fragment_stores"
         tools:layout="@layout/fragment_stores" />
 </navigation>

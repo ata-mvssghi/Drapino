@@ -1,4 +1,4 @@
-package com.example.drapino
+package com.example.drapino.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,15 +1,14 @@
-package com.example.drapino
+package com.example.drapino.fragments
 
-import android.graphics.drawable.GradientDrawable.Orientation
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.drapino.HomeViewModel
 import com.example.drapino.adapter.HistoryAdapter
 import com.example.drapino.databinding.FragmentHomeBinding
 import com.example.drapino.entity.HistoryEntity

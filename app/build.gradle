@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -55,4 +56,23 @@ dependencies {
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+
+    def lifecycle_version = "2.5.1"
+    // View Model
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
+    // Annotation processor
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+    //json ignore
+    implementation "com.fasterxml.jackson.core:jackson-annotations:2.13.0"
+    //jackson converter for retrofit
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+
 }
