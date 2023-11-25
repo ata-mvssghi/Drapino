@@ -37,6 +37,6 @@ interface LogInApiService{
 
         @Headers("Content-Type: application/json")
         @POST("api/v1/Users/VerifyToken")
-        fun verifyToken(@Body requestBody: RequestBody): Response<LastApiCallResponse>
+        suspend fun verifyToken(@Body requestBody: RequestBody): Response<LastApiCallResponse>
 }
 data class RequestBody(val phoneNumber: String, val token: String)

@@ -21,12 +21,13 @@
             android:id="@+id/otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="156dp"
+            android:layout_marginTop="144dp"
             android:ems="10"
             android:hint="OTP Code"
             android:inputType="phone"
+            android:textAlignment="center"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="476dp"
+            android:layout_marginTop="492dp"
 
             android:layout_marginEnd="48dp"
             android:text="ثبت نام"
@@ -50,13 +51,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="168dp"
             android:layout_marginTop="64dp"
             android:layout_marginBottom="64dp"
+            android:backgroundTintMode="multiply"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
+            app:layout_constraintVertical_bias="0.603" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -73,23 +76,25 @@
             android:id="@+id/signUpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="48dp"
             android:text="ورود"
             android:textColor="#29941f"
             android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/otp" />
 
         <EditText
             android:id="@+id/phoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="76dp"
             android:ems="10"
             android:hint="Phone number"
             android:inputType="phone"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -97,14 +102,38 @@
             android:id="@+id/otpSubmitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="176dp"
+            android:layout_marginBottom="164dp"
             android:hint="تایید"
             android:text="تایید"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintHorizontal_bias="0.523"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/hintTextViewPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="شماره تلفن همراه خود را وارد کنید"
+            android:textAlignment="center"
+            android:textColor="#007474"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/fialedFialog"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="140dp"
+            android:src="@drawable/oops"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

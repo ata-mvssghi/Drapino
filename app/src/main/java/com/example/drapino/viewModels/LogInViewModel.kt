@@ -4,12 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.drapino.loginApi.LogInApiService
 import com.example.drapino.loginApi.RequestBody
 import com.example.drapino.loginApi.RetrofitInstance
 import com.example.drapino.loginiResponses.Token
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,11 +27,14 @@ class LogInViewModel:ViewModel() {
     private lateinit var user_token :Token
     private lateinit var user_token_string :String
     private val _isChecked = MutableLiveData<Boolean>()
+    private val _sharedFlow = MutableStateFlow<String>("Default Value")
+    val sharedFlow: StateFlow<String> get() = _sharedFlow
     // Convert MutableLiveData to LiveData to expose it publicly
     val isChecked: LiveData<Boolean> get() = _isChecked
     fun getFirstApiRequest(phone_number:String){
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                    emitEvent("loading")
                 val response = apiService.login(phone_number,"dropino")
                 if(response.isSuccessful) {
                     Log.i("dropino", "${response.body()?.message}")
@@ -36,15 +44,19 @@ class LogInViewModel:ViewModel() {
                     Log.i("dropino", "phone nu,ber = $phone_number")
                 }
                 else{
+                    emitEvent("stopLoading")
+                    emitEvent("someThingWentWrong")
                     Log.i("dropino","first api call failed")
                     return@launch
                 }
                 val reformedNumber = reformatPhoneNumber(phone_number)
                 Log.i("dropino", "reformed is = $reformedNumber")
-                //*********************
+                //*********************2*********************
                 val checkResponse = secondApiService.checkUserAfterSendOtp(reformedNumber, isNewUser, null)
                 Log.i("dropino", "ssssssssssss")
                 if (checkResponse.isSuccessful) {
+                    emitEvent("firstApi")
+                    emitEvent("stopLoading")
                     Log.i("dropino", "mmmmmmmmmmm")
                     val responseBody = checkResponse.body()
                     if (responseBody?.isSuccess == true) {
@@ -55,6 +67,8 @@ class LogInViewModel:ViewModel() {
                         Log.i("dropino","mmd is a d good gurt")
                     }
                     else {
+                        emitEvent("stopLoading")
+                        emitEvent("someThingWentWrong")
                         // Server returned success status, but the response body indicates failure
                         Log.i("dropino", "Request failed. Server message: ${responseBody?.message}")
                     }
@@ -73,6 +87,7 @@ class LogInViewModel:ViewModel() {
     fun submitButtonClicked(phone_number:String , otpCode:String){
         CoroutineScope(Dispatchers.IO).launch{
             try {
+                emitEvent("loading")
                 val thirdApiCallResponse = apiService.zarinpalLogin(phone_number,otpCode,"dropino")
                 if(thirdApiCallResponse.isSuccessful){
                     val response = thirdApiCallResponse.body()
@@ -89,6 +104,8 @@ class LogInViewModel:ViewModel() {
                     lastTask(correctedNum,user_token_string)
                 }
                 else{
+                    emitEvent("stopLoading")
+                    emitEvent("someThingWentWrong")
                     Log.i("dropino","wtf")
                     Log.e("dropino", thirdApiCallResponse.errorBody().toString())
                 }
@@ -109,8 +126,10 @@ class LogInViewModel:ViewModel() {
                 val verifyResponse = secondApiService.verifyToken(requestBody)
                 Log.i("dropino","last api call is called ")
                 if(verifyResponse.isSuccessful){
+                    emitEvent("stopLoading")
+                    emitEvent("final success")
                     Log.i("dropino","hagahaha")
-                    Log.i("dropino","${verifyResponse.body()?.message}")
+                    Log.i("dropino","last Apicall :${verifyResponse.body()?.message}")
                     val body = verifyResponse.body()
                     user_token = body?.data?.token!!
                 }
@@ -129,5 +148,10 @@ class LogInViewModel:ViewModel() {
     fun reformatPhoneNumber(input: String): String {
         // Remove the first two characters ("98") and replace with "0"
         return "0${input.substring(2)}"
+    }
+    fun emitEvent(event: String) {
+        viewModelScope.launch {
+            _sharedFlow.emit(event)
+        }
     }
 }

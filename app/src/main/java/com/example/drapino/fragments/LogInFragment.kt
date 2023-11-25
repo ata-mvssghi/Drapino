@@ -2,18 +2,24 @@ package com.example.drapino.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.drapino.MainActivity
 import com.example.drapino.R
 import com.example.drapino.databinding.FragmentLogInBinding
 import com.example.drapino.viewModels.LogInViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 
 class LogInFragment : Fragment() {
@@ -42,12 +48,18 @@ class LogInFragment : Fragment() {
                 binding.logInButton.visibility = View.GONE
             }
         })
+        //shard flow listener
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.sharedFlow.collect { value ->
+                handleEvent(value)
+                Log.d("SharedFlow", "Received: $value")
+            }
+        }
         binding.logInButton.setOnClickListener{
             val phoneNumberField = binding.phoneNumber.text.toString()
              correctedNumber =  validatePhoneNumber(phoneNumberField)
             viewModel.getFirstApiRequest(correctedNumber)
-//            val intent = Intent(activity, MainActivity::class.java)
-//            startActivity(intent)
+
         }
         binding.otpSubmitButton.setOnClickListener{
             val otpCode = binding.otp.text.toString()
@@ -73,5 +85,27 @@ class LogInFragment : Fragment() {
             }
             return correctedNumber
 
+    }
+    fun handleEvent(event:String){
+        when(event){
+            "firstApi"->{
+                binding.hintTextViewPhone.visibility = View.GONE
+                binding.logInButton.visibility = View.GONE
+                binding.otpSubmitButton .visibility = View.VISIBLE
+            }
+            "loading"->{
+                binding.loading.visibility= View.VISIBLE
+            }
+            "stopLoading"->{
+                binding.loading.visibility = View.GONE
+            }
+            "someThingWentWrong"->{
+                binding.fialedFialog.visibility = View.VISIBLE
+            }
+            "final success"->{
+                val intent = Intent(activity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
