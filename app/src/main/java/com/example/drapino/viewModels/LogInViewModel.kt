@@ -1,6 +1,7 @@
 package com.example.drapino.viewModels
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +25,7 @@ class LogInViewModel:ViewModel() {
     val apiService = retrofit.create(LogInApiService::class.java)
     val secondApiRetrofit = RetrofitInstance.getSecondRetrofitInstance()
     val secondApiService = secondApiRetrofit.create(LogInApiService::class.java)
-    private lateinit var user_token :Token
+     lateinit var user_token :Token
     private lateinit var user_token_string :String
     private val _isChecked = MutableLiveData<Boolean>()
     private val _sharedFlow = MutableStateFlow<String>("Default Value")
