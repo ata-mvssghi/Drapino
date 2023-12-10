@@ -5,11 +5,17 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.drapino.fragments.LogInFragment
 import com.example.drapino.loginApi.LogInApiService
 import com.example.drapino.loginApi.RequestBody
 import com.example.drapino.loginApi.RetrofitInstance
 import com.example.drapino.loginiResponses.Token
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,11 +26,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LogInViewModel:ViewModel() {
-    var isNewUser = false
-    val retrofit  = RetrofitInstance.getRetrofitInstance()
-    val apiService = retrofit.create(LogInApiService::class.java)
-    val secondApiRetrofit = RetrofitInstance.getSecondRetrofitInstance()
-    val secondApiService = secondApiRetrofit.create(LogInApiService::class.java)
+    private var isNewUser = false
+    private val retrofit  = RetrofitInstance.getRetrofitInstance()
+    private val apiService = retrofit.create(LogInApiService::class.java)
+    private val secondApiRetrofit = RetrofitInstance.getSecondRetrofitInstance()
+    private val secondApiService = secondApiRetrofit.create(LogInApiService::class.java)
      lateinit var user_token :Token
     private lateinit var user_token_string :String
     private val _isChecked = MutableLiveData<Boolean>()
@@ -54,11 +60,9 @@ class LogInViewModel:ViewModel() {
                 Log.i("dropino", "reformed is = $reformedNumber")
                 //*********************2*********************
                 val checkResponse = secondApiService.checkUserAfterSendOtp(reformedNumber, isNewUser, null)
-                Log.i("dropino", "ssssssssssss")
                 if (checkResponse.isSuccessful) {
                     emitEvent("firstApi")
                     emitEvent("stopLoading")
-                    Log.i("dropino", "mmmmmmmmmmm")
                     val responseBody = checkResponse.body()
                     if (responseBody?.isSuccess == true) {
                         Log.i("dropino", responseBody.message ?: "No message")
@@ -81,6 +85,7 @@ class LogInViewModel:ViewModel() {
                 }
             }
             catch (e:Exception){
+                emitEvent("internet problem")
                 println(e.stackTrace.toString())
             }
         }
@@ -113,6 +118,7 @@ class LogInViewModel:ViewModel() {
 
             }
             catch (e:java.lang.Exception){
+                emitEvent("internet problem")
                 Log.i("dropino","wtfff")
                 Log.e("dropino", "${e.message}")
             }

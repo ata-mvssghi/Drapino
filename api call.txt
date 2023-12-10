@@ -1,0 +1,31 @@
+
+curl :
+curl --location 'https://betaapi.droppin.ir/api/v1/Users/VerifyToken' \
+--header 'Content-Type: application/json' \
+--data '{
+    "phoneNumber": "09372046549",
+    "token": "Token 743c47c95e04e1ebb69b169dbce82451040654dc63"
+}'
+
+
+response :
+
+{
+    "data": {
+        "hasCards": false,
+        "claims": {
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": "2",
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "09372046549",
+            "AspNet.Identity.SecurityStamp": "a5e353e6-89ac-4af7-8c3b-f8cb1fee3229"
+        },
+        "token": {
+            "access_token": "eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.tUNxDCc1UAMFZy_5VWYcNmBCLc86CFe-Vfcl2nEYGM2qUpdkytW8nQ.Rz0Ug9cULMKeUSS3oU_e8A.V7pDhA41iFrHSK_d_meK1G1_L7jXda0DttVk--EU6M0Z-HZRQekZ9NLMlIiUrYL_25xoDWmQye7i0k6LsZ6QQEO5NUDh9_KyWPOVCKNlkpKgRfehNSsgTyp2HapwEd2geydfl0wdTcpoubowglruF3gmTTKDplUmgtml2anfQEJRyYyfjwiG6ggaQxZmKLOnbH8C1L-IAg9jA7D5r649PQf856YC6isJfmeAgeFBzNIH81w_z5r6mWPBk4nmuKKLl2dTPNGhMcvz8gtBC8_3otIg5MlZpb36bxvy5I9tPkPNFcStkAfqilRBrU-NwW4vUrXssFB6hxASegpdAPBPc9rdgBWXYTinNjP5j2A_j4DUXkFHlmjCe_Ki52Edhssr8ZAeU16_1-ZP_RrAUSlVl_K_EP5Wgu4-z8ytN1PD9oTgx-RIQiIH5qsndI1F1qJ1FUX6ICcxfttNSLiacD8Yaw.s4VSxEwbpg8IDJc2zzVd4Q",
+            "refresh_token": null,
+            "token_type": "Bearer",
+            "expires_in": 604799
+        }
+    },
+    "isSuccess": true,
+    "statusCode": "Success",
+    "message": "عملیات با موفقیت انجام شد"
+}

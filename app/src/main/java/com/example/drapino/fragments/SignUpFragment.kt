@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.drapino.MainActivity
+import com.example.drapino.activities.MainActivity
 import com.example.drapino.databinding.FragmentSignUpBinding
 
 

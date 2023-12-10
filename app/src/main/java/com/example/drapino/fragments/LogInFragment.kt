@@ -11,19 +11,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import com.example.drapino.MainActivity
+import com.example.drapino.activities.MainActivity
 import com.example.drapino.R
 import com.example.drapino.databinding.FragmentLogInBinding
 import com.example.drapino.viewModels.LogInViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-
-
 class LogInFragment : Fragment() {
     private lateinit var binding :FragmentLogInBinding
     private lateinit var   correctedNumber:String
@@ -60,11 +54,15 @@ class LogInFragment : Fragment() {
         binding.logInButton.setOnClickListener{
             val phoneNumberField = binding.phoneNumber.text.toString()
              correctedNumber =  validatePhoneNumber(phoneNumberField)
+            binding.erorText.visibility = View.GONE
+            binding.erorimage.visibility = View.GONE
             viewModel.getFirstApiRequest(correctedNumber)
 
         }
         binding.otpSubmitButton.setOnClickListener{
             val otpCode = binding.otp.text.toString()
+            binding.erorText.visibility = View.GONE
+            binding.erorimage.visibility = View.GONE
             viewModel.submitButtonClicked(correctedNumber,otpCode)
         }
         binding.signUpText.setOnClickListener {
@@ -112,6 +110,12 @@ class LogInFragment : Fragment() {
                 editor.apply()
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+            }
+            "internet problem"->{
+                //ui
+                binding.erorText.visibility = View.VISIBLE
+                binding.erorimage.visibility =View.VISIBLE
+                binding.loading.visibility = View.GONE
             }
         }
     }
